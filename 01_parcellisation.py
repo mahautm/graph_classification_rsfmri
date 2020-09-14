@@ -9,13 +9,13 @@ def parcellation(sub_name="NYU_0051091"):
     rena = Parcellations(
         method="rena",
         n_parcels=200,
-        standardize=False,
+        standardize=True,
         smoothing_fwhm=2.0,
         scaling=True,
     )
 
     rena.fit_transform(
-        "/scratch/mmahaut/data/abide/downloaded_preprocessed/{}/{}_func_preproc.nii.gz".format(
+        "/scratch/mmahaut/data/abide/downloaded_preprocessed/{}/{}_func_minimal.nii.gz".format(
             sub_name, sub_name
         )
     )
