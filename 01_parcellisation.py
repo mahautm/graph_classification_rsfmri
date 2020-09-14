@@ -69,4 +69,8 @@ if __name__ == "__main__":
     subs_list_file = open("subs_list_asd.json")
     subs_list = json.load(subs_list_file)
     for sub_name in subs_list:
-        parcellation(sub_name)
+        parcellation(
+            sub_name,
+            "/scratch/mmahaut/data/abide/downloaded_preprocessed/",
+            "/scratch/mmahaut/data/abide/graph_classification/",
+        )
