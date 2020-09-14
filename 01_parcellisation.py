@@ -3,7 +3,7 @@ from nilearn import plotting
 from nilearn.input_data import NiftiMasker
 from sklearn.feature_extraction.image import grid_to_graph
 import numpy as np
-import time
+import json
 from sklearn.cluster import AgglomerativeClustering
 import os
 import matplotlib.pyplot as plt
