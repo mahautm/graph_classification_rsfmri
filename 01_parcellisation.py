@@ -12,7 +12,7 @@ from nilearn.datasets import load_mni152_brain_mask
 
 def parcellation(sub_name, input_dir, out_dir, spatial_regularisation=10):
     raw_img = load_img(
-        os.path.join(input_dir, "{}_func_minimal.nii.gz".format(sub_name)), 1
+        os.path.join(input_dir, "{0}/{0}_func_minimal.nii.gz".format(sub_name)), 1
     )
     flat_img = (raw_img.get_fdata()).reshape(-1, 176)
 
