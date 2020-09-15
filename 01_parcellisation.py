@@ -14,7 +14,7 @@ def parcellation(sub_name, input_dir, out_dir, spatial_regularisation=10):
     raw_img = load_img(
         os.path.join(input_dir, "{0}/{0}_func_minimal.nii.gz".format(sub_name)), 1
     )
-    flat_img = (raw_img.get_fdata()).reshape(-1, 176)
+    flat_img = (raw_img.get_fdata()).reshape(-1, raw_img.shape[3])
 
     mask_img = load_mni152_brain_mask()
     nifti_masker = NiftiMasker(
