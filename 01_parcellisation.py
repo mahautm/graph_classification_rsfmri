@@ -10,7 +10,9 @@ import matplotlib.pyplot as plt
 from nilearn.datasets import load_mni152_brain_mask
 
 
-def parcellation(sub_name, input_dir, out_dir, spatial_regularisation=10):
+def parcellation(
+    sub_name, input_dir, out_dir, spatial_regularisation=10, n_clusters=200
+):
     raw_img = load_img(
         os.path.join(input_dir, "{0}/{0}_func_minimal.nii.gz".format(sub_name)), 1
     )
@@ -49,7 +51,6 @@ def parcellation(sub_name, input_dir, out_dir, spatial_regularisation=10):
     input_data = np.vstack((flat_img, spatial_regularisation * flat_coords))
 
     # Compute clustering
-    n_clusters = 200  # number of regions
     ward = AgglomerativeClustering(
         n_clusters=n_clusters, linkage="ward", connectivity=connectivity
     )
