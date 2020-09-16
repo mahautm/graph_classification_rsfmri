@@ -65,6 +65,13 @@ def parcellation(
         )
     )
 
+    np.save(
+        os.path.join(out_dir, sub_name, "ward_connectivity.npy",),
+        ward.connectivity.tocsr(),
+    )
+
+    np.save(os.path.join(out_dir, sub_name, "ward_labels.npy",), ward.labels_)
+
 
 if __name__ == "__main__":
     subs_list_file = open(
