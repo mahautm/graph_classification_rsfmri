@@ -67,7 +67,9 @@ def parcellation(
 
 
 if __name__ == "__main__":
-    subs_list_file = open("subs_list_asd.json")
+    subs_list_file = open(
+        "/scratch/mmahaut/scripts/graph_classification_rsfmri/subs_list_asd.json"
+    )
     subs_list = json.load(subs_list_file)
     for sub_name in subs_list:
         parcellation(
