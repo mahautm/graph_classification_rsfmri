@@ -73,6 +73,6 @@ gamma = 1.0  # I need to check which value we should use... we will change it la
 print("GraphHopper gamma : {}".format(gamma))
 gk = GraphHopper(normalize=True, kernel_type=("gaussian", float(gamma)))
 K = gk.fit_transform(G)
-
+np.save("/scratch/mmahaut/data/abide/graph_classification/gram_matrix.npy", K)
 # K is your gram matrix, that you can then use to perform SVM-based classification...
 # I will give you another bit of code to do it!
