@@ -1,4 +1,4 @@
-from scipy.sparse import coo_matrix
+from scipy.sparse import load_npz
 import os
 import numpy as np
 import json
@@ -9,14 +9,12 @@ def connectivity(sub_name, out_dir, n_clusters=200):
     parcel_submask = []
     parcels_size = []
     for i in range(n_clusters):
-        ward_labels = np.load(
-            os.path.join(out_dir, sub_name, "ward_labels.npy"), allow_pickle=True
-        )
+        ward_labels = np.load(os.path.join(out_dir, sub_name, "ward_labels.npy"))
         parcel_submask.append(np.array(np.nonzero(ward_labels == i))[0])
         parcels_size.append(len(parcel_submask[-1]))
     A = np.zeros([n_clusters, n_clusters])
-    ward_connectivity = np.load(
-        os.path.join(out_dir, sub_name, "ward_connectivity.npy"), allow_pickle=True
+    ward_connectivity = load_npz(
+        os.path.join(out_dir, sub_name, "ward_connectivity.npy")
     )
     print(ward_connectivity.shape)
     for i in range(n_clusters):

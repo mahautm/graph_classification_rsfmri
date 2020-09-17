@@ -8,6 +8,7 @@ from sklearn.cluster import AgglomerativeClustering
 import os
 import matplotlib.pyplot as plt
 from nilearn.datasets import load_mni152_brain_mask
+from scipy.sparse import save_npz
 
 
 def parcellation(
@@ -65,7 +66,7 @@ def parcellation(
         )
     )
 
-    np.save(
+    save_npz(
         os.path.join(out_dir, sub_name, "ward_connectivity.npy",),
         ward.connectivity.tocsr(),
     )
@@ -74,13 +75,9 @@ def parcellation(
 
 
 if __name__ == "__main__":
-    subs_list_file = open(
-        "/scratch/mmahaut/scripts/graph_classification_rsfmri/subs_list_asd.json"
+    sub_name = sys.argv[1]
+    parcellation(
+        sub_name,
+        "/scratch/mmahaut/data/abide/downloaded_preprocessed/",
+        "/scratch/mmahaut/data/abide/graph_classification/",
     )
-    subs_list = json.load(subs_list_file)
-    for sub_name in subs_list:
-        parcellation(
-            sub_name,
-            "/scratch/mmahaut/data/abide/downloaded_preprocessed/",
-            "/scratch/mmahaut/data/abide/graph_classification/",
-        )
