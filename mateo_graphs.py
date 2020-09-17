@@ -7,7 +7,7 @@ import json
 
 
 def centeroidnp(arr):
-    length = len(arr)
+    length = arr.shape[0]
     sum_x = np.sum(arr[:, 0])
     sum_y = np.sum(arr[:, 1])
     sum_z = np.sum(arr[:, 2])
@@ -35,7 +35,7 @@ def compute_graph(sub_name, spatial_regulation=10):
     X2 = []
     for i in range(n_parcels):
         # compute 3D coordinates of the barycenter of the parcel i
-        pos = np.where(wards_data == i)
+        pos = np.array(np.where(wards_data == i))
         x1_i = centeroidnp(pos)
         X1.append(x1_i)
         # compute connectivity fingerprint of the parcel i
