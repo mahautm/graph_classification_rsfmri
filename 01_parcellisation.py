@@ -27,7 +27,7 @@ def parcellation(
     nifti_masker = nifti_masker.fit()
     flat_img = nifti_masker.transform(raw_img)
     plotting.plot_roi(mask_img, title="mask", display_mode="xz", cmap="prism")
-    mask = nifti_masker.mask_img_.get_data().astype(np.bool)
+    mask = nifti_masker.mask_img_.get_fdata().astype(np.bool)
     shape = mask.shape
     connectivity = grid_to_graph(n_x=shape[0], n_y=shape[1], n_z=shape[2], mask=mask)
 
@@ -68,7 +68,7 @@ def parcellation(
     )
 
     save_npz(
-        os.path.join(out_dir, sub_name, "ward_connectivity.npy",),
+        os.path.join(out_dir, sub_name, "ward_connectivity.npz",),
         ward.connectivity.tocsr(),
     )
 
