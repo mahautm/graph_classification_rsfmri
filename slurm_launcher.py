@@ -69,9 +69,8 @@ def run_slurm_job(
         batch_cmd = (
             'eval "$(/scratch/mmahaut/tools/Anaconda3/bin/conda shell.bash hook)"\n'
             + "conda activate tf\n"
-            + "{} {}/{} {}".format(python_path, code_dir, script_name_1, sub_name)
+            + "{} {}/{} {}\n".format(python_path, code_dir, script_name_1, sub_name)
             + "{} {}/{} {}".format(python_path, code_dir, script_name_2, sub_name)
-
         )
         fh.writelines(batch_cmd)
 
