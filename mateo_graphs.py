@@ -7,7 +7,7 @@ import json
 
 
 def centeroidnp(arr):
-    length = arr.shape[0]
+    length = len(arr)
     sum_x = np.sum(arr[:, 0])
     sum_y = np.sum(arr[:, 1])
     sum_z = np.sum(arr[:, 2])
