@@ -9,7 +9,8 @@ def run_slurm_job(
     python_path="python",
     slurm_dir="/scratch/mmahaut/scripts/slurm",
     code_dir="/scratch/mmahaut/scripts/graph_classification_rsfmri",
-    script_name="02_connectivity.py",
+    script_name_1="01_parcellation.py",
+    script_name_2="02_connectivity.py",
     time_wall="12:00:00",
 ):
     """
@@ -68,7 +69,9 @@ def run_slurm_job(
         batch_cmd = (
             'eval "$(/scratch/mmahaut/tools/Anaconda3/bin/conda shell.bash hook)"\n'
             + "conda activate tf\n"
-            + "{} {}/{} {}".format(python_path, code_dir, script_name, sub_name)
+            + "{} {}/{} {}".format(python_path, code_dir, script_name_1, sub_name)
+            + "{} {}/{} {}".format(python_path, code_dir, script_name_2, sub_name)
+
         )
         fh.writelines(batch_cmd)
 
