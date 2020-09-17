@@ -3,6 +3,7 @@ from grakel.utils import graph_from_networkx
 from grakel.kernels import GraphHopper
 import numpy as np
 from nilearn.image import load_img
+import json
 
 
 def centeroidnp(arr):
