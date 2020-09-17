@@ -24,7 +24,7 @@ def connectivity(sub_name, out_dir, n_clusters=200):
             A[i, j] = a.sum()
             A[j, i] = A[i, j]
         A[A != 0] = 1
-    np.save(os.path.join(out_dir, "parcel_adjacency.npy"), A)
+    np.save(os.path.join(out_dir, sub_name, "parcel_adjacency.npy"), A)
 
 
 if __name__ == "__main__":
