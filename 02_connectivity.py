@@ -18,6 +18,7 @@ def connectivity(sub_name, out_dir, n_clusters=200):
     ward_connectivity = np.load(
         os.path.join(out_dir, sub_name, "ward_connectivity.npy"), allow_pickle=True
     )
+    print(ward_connectivity.shape)
     for i in range(n_clusters):
         for j in range(i):
             a = ward_connectivity[parcel_submask[i], :][:, parcel_submask[j]]
