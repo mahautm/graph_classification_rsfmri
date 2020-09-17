@@ -2,6 +2,7 @@ from scipy.sparse import coo_matrix
 import os
 import numpy as np
 import json
+import sys
 
 # get coord adjacency matrix
 def connectivity(sub_name, out_dir, n_clusters=200):
@@ -27,12 +28,6 @@ def connectivity(sub_name, out_dir, n_clusters=200):
 
 
 if __name__ == "__main__":
-    subs_list_file = open(
-        "/scratch/mmahaut/scripts/graph_classification_rsfmri/subs_list_asd.json"
-    )
-    subs_list = json.load(subs_list_file)
-    for sub_name in subs_list:
-        connectivity(
-            sub_name, "/scratch/mmahaut/data/abide/graph_classification/",
-        )
+    sub_name = sys.argv[1]
+    connectivity(sub_name, "/scratch/mmahaut/data/abide/graph_classification/")
 
