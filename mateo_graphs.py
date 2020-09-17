@@ -23,7 +23,9 @@ def compute_graph(sub_name, spatial_regulation=10):
     )
     wards_data = wards.get_fdata()
     A = np.load(
-        "/scratch/mmahaut/data/abide/graph_classification/{}/parcel_adjacency.npy"
+        "/scratch/mmahaut/data/abide/graph_classification/{}/parcel_adjacency.npy".format(
+            sub_name
+        )
     )
     # create networkx-graph from the n_parcels x n_parcels adjacency matrix A
     gx = nx.from_numpy_matrix(A)
