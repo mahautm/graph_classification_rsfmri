@@ -14,7 +14,7 @@ def connectivity(sub_name, out_dir, n_clusters=200):
         parcels_size.append(len(parcel_submask[-1]))
     A = np.zeros([n_clusters, n_clusters])
     ward_connectivity = load_npz(
-        os.path.join(out_dir, sub_name, "ward_connectivity.npz"), allow_pickle=True
+        os.path.join(out_dir, sub_name, "ward_connectivity.npz")
     )
     print(ward_connectivity.shape)
     for i in range(n_clusters):
