@@ -22,34 +22,34 @@ if __name__ == "__main__":
 
     # define your cross-validation
     cv = StratifiedKFold(n_splits=10)
-    for c in [8e5, 9e5, 1e6, 2e6, 3e6, 4e6, 5e6, 6e6]:
-        print("C = ", c)
-        score_list = []
-        fold = 0
-        for train_index, test_index in cv.split(K, y):
-            fold += 1
-            # print("TRAIN:", train_index, "TEST:", test_index)
-            K_train = K[np.ix_(train_index, train_index)]
-            K_test = K[np.ix_(test_index, train_index)]
-            y_train = y[train_index]
-            y_test = y[test_index]
 
-            svc = SVC(kernel="precomputed", C=c)
-            svc.fit(K_train, y_train)
-            dump(
-                svc,
-                "/scratch/mmahaut/data/abide/graph_classification/model_fold{}.sav".format(
-                    fold
-                ),
-            )
-            y_pred = svc.predict(K_test)
-            score = accuracy_score(y_test, y_pred)
-            print(y_test, y_pred)
-            score_list.append(score)
+    score_list = []
+    fold = 0
+    for train_index, test_index in cv.split(K, y):
+        fold += 1
+        # print("TRAIN:", train_index, "TEST:", test_index)
+        K_train = K[np.ix_(train_index, train_index)]
+        K_test = K[np.ix_(test_index, train_index)]
+        y_train = y[train_index]
+        y_test = y[test_index]
 
-        print("\tscore: {:.02f}".format(np.mean(score_list) * 100))
-        print(score_list)
-        np.save(
-            "/scratch/mmahaut/data/abide/graph_classification/score_list.npy",
-            score_list,
+        svc = SVC(
+            kernel="precomputed", C=4e6
+        )  # C a été testé logarithmiquement entre 1e-10 et 1e8
+        svc.fit(K_train, y_train)
+        dump(
+            svc,
+            "/scratch/mmahaut/data/abide/graph_classification/model_fold{}.sav".format(
+                fold
+            ),
         )
+        y_pred = svc.predict(K_test)
+        score = accuracy_score(y_test, y_pred)
+        print(y_test, y_pred)
+        score_list.append(score)
+
+    print("\tscore: {:.02f}".format(np.mean(score_list) * 100))
+    print(score_list)
+    np.save(
+        "/scratch/mmahaut/data/abide/graph_classification/score_list.npy", score_list,
+    )
