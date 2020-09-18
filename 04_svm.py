@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     # define your cross-validation
     cv = StratifiedKFold(n_splits=10)
-    for c in [1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1000, 10000, 100000]:
+    for c in [1e4, 1e5, 1e6, 2e4, 3e4, 4e4, 5e4, 6e4]:
         print("C = ", c)
         score_list = []
         fold = 0
