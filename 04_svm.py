@@ -18,7 +18,7 @@ if __name__ == "__main__":
     # no normalisation step (which kind of seems legit for classification)
     for key in classified_dict:
         y.append(1 if classified_dict[key] == "asd" else 0)
-        y = np.array(y)
+    y = np.array(y)
 
     # define your cross-validation
     cv = KFold(n_splits=10)
