@@ -27,7 +27,7 @@ if __name__ == "__main__":
     fold = 0
     for train_index, test_index in cv.split(K):
         fold += 1
-        print("TRAIN:", train_index, "TEST:", test_index)
+        # print("TRAIN:", train_index, "TEST:", test_index)
         K_train = K[np.ix_(train_index, train_index)]
         K_test = K[np.ix_(test_index, train_index)]
         y_train = y[train_index]
@@ -43,6 +43,7 @@ if __name__ == "__main__":
         )
         y_pred = svc.predict(K_test)
         score = accuracy_score(y_test, y_pred)
+        print(y_test, y_pred)
         score_list.append(score)
 
     print("\tscore: {:.02f}".format(np.mean(score_list) * 100))
