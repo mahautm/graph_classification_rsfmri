@@ -1,6 +1,6 @@
 import numpy as np
 import json
-from sklearn.model_selection import KFold
+from sklearn.model_selection import StratifiedKFold
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 from joblib import dump
@@ -21,11 +21,11 @@ if __name__ == "__main__":
     y = np.array(y)
 
     # define your cross-validation
-    cv = KFold(n_splits=10)
+    cv = StratifiedKFold(n_splits=10)
 
     score_list = []
     fold = 0
-    for train_index, test_index in cv.split(K):
+    for train_index, test_index in cv.split(K, y):
         fold += 1
         # print("TRAIN:", train_index, "TEST:", test_index)
         K_train = K[np.ix_(train_index, train_index)]
