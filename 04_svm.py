@@ -29,7 +29,9 @@ if __name__ == "__main__":
         fold += 1
         # print("TRAIN:", train_index, "TEST:", test_index)
         K_train = K[np.ix_(train_index, train_index)]
-        K_test = K[np.ix_(test_index, train_index)]
+        K_test = K[
+            np.ix_(test_index, test_index)
+        ]  # était (test_index, train_index), j'ai modifié car les résultats étaient bizarres et ce n'était pas cohérent
         y_train = y[train_index]
         y_test = y[test_index]
 
