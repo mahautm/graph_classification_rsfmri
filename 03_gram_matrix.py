@@ -60,7 +60,7 @@ def compute_graph(sub_name, spatial_regulation=10):
     wards_timeseries = wards_masker.fit_transform(rsfmri_img)
     yeo_timeseries = yeo_masker.fit_transform(rsfmri_img)
 
-    for i in range(n_parcels - 1):  # 0 has been removed by the mask
+    for i in range(len(wards_timeseries.T)):
         # compute 3D coordinates of the barycenter of the parcel i
         pos = np.array(np.where(wards_data == i))
         x1_i = centeroidnp(pos)
@@ -77,6 +77,7 @@ def compute_graph(sub_name, spatial_regulation=10):
     # concatenate X1 and X2 to produce the full
     # set of attributes
     attr = np.hstack([X1_norm, X2_norm])  # TODO: you might need to transpose them!
+    print(sub_name, " attr : ", attr.shape)
     # construct dict of attributes
     d = {i: list(attr[i, :]) for i in range(attr.shape[0])}
     # add attributes to nodes
