@@ -125,7 +125,7 @@ def compute_graph(sub_name, spatial_regulation=10):
     # construct dict of attributes
     d = {idx: list(attr[idx, :]) for idx in range(attr.shape[0])}
     # add attributes to nodes
-    nx.set_node_attributes(gx, d, "attributes")
+    nx.set_node_attributes(gx, d, "attr")
     return gx
 
 
@@ -138,7 +138,7 @@ if __name__ == "__main__":
 
     # all your  gx graphs are in a list of graphs called nx_graphs
     # transform networkx-graph into GraKel-graph
-    G = list(graph_from_networkx(nx_graphs, node_labels_tag="attributes"))
+    G = list(graph_from_networkx(nx_graphs, node_labels_tag="attr"))
 
     gamma = (
         1.0  # I need to check which value we should use... we will change it later...
