@@ -13,6 +13,18 @@ from scipy.stats import pearsonr
 
 
 def centeroidnp(arr):
+    """
+    return the parcel's baricentre
+
+    Parameters
+    ----------
+    arr : np.array() of shape (?,3)
+        three stacked arrays respectively with the x, y, and z coordinates of the voxels in the parcel
+
+    Output
+    ------
+    x, y, z : coordinates of the baricentre of the parcel
+    """
     length = arr.shape[0]
     sum_x = np.sum(arr[:, 0])
     sum_y = np.sum(arr[:, 1])
@@ -21,6 +33,22 @@ def centeroidnp(arr):
 
 
 def connectivity_fingerprint(yeo_timeseries, wards_timeserie):
+    """
+    Will calculate connectivity between atlas regions and parcels
+
+    Parameters
+    ----------
+    yeo_timeseries : np.array, (n_time * 17)
+        an rsfMRI seperated in 17 timeseries corresponding to the 17 regions in the yeo (2011) atlas
+
+    wards_timeserie : np.array (n_time)
+        a single rsfmri parcel timeserie
+
+    Output
+    ------
+    corr : (n_parcels * n_atlas_regions) np.array(), should be 200*17
+        grid of correlation of activation between a given parcel and a given region in an atlas over a time series
+    """
     corr = np.empty(len(yeo_timeseries.T))
     for i in range(len(yeo_timeseries.T)):  # for yeo, we iterate through the 17 parcels
         corr[i] = pearsonr(wards_timeserie, yeo_timeseries[:, i])[0]
@@ -29,6 +57,19 @@ def connectivity_fingerprint(yeo_timeseries, wards_timeserie):
 
 ## Create graphs (one graph per subject)
 def compute_graph(sub_name, spatial_regulation=10):
+    """
+    Parameters
+    ----------
+    sub_name : subject name, should correspond to the folder in which ward data is saved
+
+    spatial_regulation : float,
+        regulation used on the spatial addition in the ward_parcellation.
+        Used to collect the file, as it appears in it (the XX in skward_regXX_parcellation.nii.gz)
+
+    Output
+    ------
+    gx : stack of parcel baricentres and yeo-ROI connectivity fingerprint in a graph 
+    """
     wards = load_img(
         "/scratch/mmahaut/data/abide/graph_classification/{}/skward_reg{}_parcellation.nii.gz".format(
             sub_name, spatial_regulation
@@ -76,12 +117,13 @@ def compute_graph(sub_name, spatial_regulation=10):
     X2_norm = (X2 - X2.min()) / (X2.max() - X2.min())
     # concatenate X1 and X2 to produce the full
     # set of attributes
-    attr = np.hstack([X1_norm, X2_norm])  # TODO: you might need to transpose them!
+    attr = np.hstack([X1_norm, X2_norm])
     print(sub_name, " attr : ", attr.shape)
     # construct dict of attributes
     d = {i: list(attr[i, :]) for i in range(attr.shape[0])}
     # add attributes to nodes
     nx.set_node_attributes(gx, d, "attributes")
+    print(gx["attributes"].shape)
     return gx
 
 
@@ -104,4 +146,3 @@ gk = GraphHopper(normalize=True, kernel_type=("gaussian", float(gamma)))
 K = gk.fit_transform(G)
 np.save("/scratch/mmahaut/data/abide/graph_classification/gram_matrix.npy", K)
 # K is your gram matrix, that you can then use to perform SVM-based classification...
-# I will give you another bit of code to do it!
