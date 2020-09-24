@@ -123,7 +123,7 @@ def compute_graph(sub_name, spatial_regulation=10):
     d = {i: list(attr[i, :]) for i in range(attr.shape[0])}
     # add attributes to nodes
     nx.set_node_attributes(gx, d, "attributes")
-    print(gx["attributes"].shape)
+    print(gx.nodes[1]["attributes"])
     return gx
 
 
