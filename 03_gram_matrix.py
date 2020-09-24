@@ -4,6 +4,9 @@ from grakel.kernels import GraphHopper
 import numpy as np
 from nilearn.image import load_img
 import json
+from nilearn.datasets import fetch_atlas_yeo_2011
+from nilearn.input_data import NiftiLabelsMasker
+from scipy.stats import pearsonr
 
 
 def centeroidnp(arr):
@@ -12,6 +15,13 @@ def centeroidnp(arr):
     sum_y = np.sum(arr[:, 1])
     sum_z = np.sum(arr[:, 2])
     return sum_x / length, sum_y / length, sum_z / length
+
+
+def connectivity_fingerprint(yeo_timeseries, wards_timeserie):
+    corr = np.empty(len(yeo_timeseries.T))
+    for i in range(len(yeo_timeseries.T)):  # for yeo, we iterate through the 17 parcels
+        corr[i, j] = pearsonr(wards_timeserie, yeo_timeseries[:, i])[0]
+    return corr
 
 
 ## Create graphs (one graph per subject)
@@ -33,13 +43,27 @@ def compute_graph(sub_name, spatial_regulation=10):
     # for each parcel (which will become a graph node), compute two sets of attributes:
     X1 = []
     X2 = []
+
+    yeo = fetch_atlas_yeo_2011()
+    yeo_masker = NiftiLabelsMasker(
+        labels_img=yeo["thick_17"], standardize=True, memory="nilearn_cache"
+    )
+    wards_masker = NiftiLabelsMasker(
+        labels_img=wards, standardize=True, memory="nilearn_cache"
+    )
+    rsfmri_img = load_img(
+        "/scratch/mmahaut/data/abide/downloaded_preprocessed/NYU_0051091/NYU_0051091_func_preproc.nii.gz"
+    )
+    wards_timeseries = wards_masker.fit_transform(rsfmri_img)
+    yeo_timeseries = yeo_masker.fit_transform(rsfmri_img)
+
     for i in range(n_parcels):
         # compute 3D coordinates of the barycenter of the parcel i
         pos = np.array(np.where(wards_data == i))
         x1_i = centeroidnp(pos)
         X1.append(x1_i)
         # compute connectivity fingerprint of the parcel i
-        x2_i = x1_i  # TODO (but later; to start with, just use x2_i = x1_i)
+        x2_i = connectivity_fingerprint(yeo_timeseries, wards_timeseries[:, i])
         X2.append(x2_i)
     # optional: normalize X1 and X2 (with min & max)
     X1 = np.array(X1)
