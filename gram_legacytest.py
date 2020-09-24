@@ -137,9 +137,8 @@ if __name__ == "__main__":
     ## Compute gram matrix
 
     # all your  gx graphs are in a list of graphs called nx_graphs
-
     # transform networkx-graph into GraKel-graph
-    G = list(graph_from_networkx([nx_graphs], node_labels_tag="attributes"))
+    G = list(graph_from_networkx(nx_graphs, node_labels_tag="attributes"))
 
     gamma = (
         1.0  # I need to check which value we should use... we will change it later...
