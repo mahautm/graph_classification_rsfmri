@@ -120,7 +120,7 @@ def compute_graph(sub_name, spatial_regulation=10):
     X2_norm = (X2 - X2.min()) / (X2.max() - X2.min())
     # concatenate X1 and X2 to produce the full
     # set of attributes
-    attr = np.hstack([X1_norm, X2_norm])
+    attr = np.hstack([X1_norm.T, X2_norm.T])
     print(sub_name, " attr : ", attr.shape)
     # construct dict of attributes
     d = {i: list(attr[i, :]) for i in range(attr.shape[0])}
@@ -140,7 +140,7 @@ if __name__ == "__main__":
     # all your  gx graphs are in a list of graphs called nx_graphs
 
     # transform networkx-graph into GraKel-graph
-    G = list(graph_from_networkx(list(nx_graphs), node_labels_tag="attributes"))
+    G = list(graph_from_networkx(nx_graphs, node_labels_tag="attributes"))
 
     gamma = (
         1.0  # I need to check which value we should use... we will change it later...
