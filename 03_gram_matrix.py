@@ -1,3 +1,6 @@
+# has to be run with either sklearn version 0.22 or with updated grakel that imports joblib independently
+# On the 24/09/2020 the updated grakel is only available from github (not pip)
+
 import networkx as nx
 from grakel.utils import graph_from_networkx
 from grakel.kernels import GraphHopper
@@ -20,7 +23,7 @@ def centeroidnp(arr):
 def connectivity_fingerprint(yeo_timeseries, wards_timeserie):
     corr = np.empty(len(yeo_timeseries.T))
     for i in range(len(yeo_timeseries.T)):  # for yeo, we iterate through the 17 parcels
-        corr[i, j] = pearsonr(wards_timeserie, yeo_timeseries[:, i])[0]
+        corr[i] = pearsonr(wards_timeserie, yeo_timeseries[:, i])[0]
     return corr
 
 
@@ -71,7 +74,8 @@ def compute_graph(sub_name, spatial_regulation=10):
 
     X1_norm = (X1 - X1.min()) / (X1.max() - X1.min())
     X2_norm = (X2 - X2.min()) / (X2.max() - X2.min())
-    # concatenate X1 and X2 to produce the full set of attributes
+    # concatenate X1 and X2 to produce the full
+    # set of attributes
     attr = np.hstack([X1_norm, X2_norm])  # TODO: you might need to transpose them!
     # construct dict of attributes
     d = {i: list(attr[i, :]) for i in range(attr.shape[0])}
