@@ -52,7 +52,9 @@ def connectivity_fingerprint(yeo_timeseries, wards_timeserie):
     corr = np.empty(len(yeo_timeseries.T))
     for i in range(len(yeo_timeseries.T)):  # for yeo, we iterate through the 17 parcels
         corr[i] = pearsonr(wards_timeserie, yeo_timeseries[:, i])[0]
-    corr[np.where(np.isnan(corr[:]))] = 0  # removing nans, of which we get quite a few
+    corr[
+        np.where(np.isnan(corr[:]))
+    ] = 0  # removing nans, of which we get quite a few, when an input array is constant
     return corr
 
 
@@ -139,10 +141,7 @@ if __name__ == "__main__":
 # all your  gx graphs are in a list of graphs called nx_graphs
 
 # transform networkx-graph into GraKel-graph
-G = [
-    graph_from_networkx(nx_graphs[i], node_labels_tag="attributes")
-    for i in range(len(nx_graphs))
-]
+G = list(graph_from_networkx(list(nx_graphs), node_labels_tag="attributes"))
 
 gamma = 1.0  # I need to check which value we should use... we will change it later...
 print("GraphHopper gamma : {}".format(gamma))

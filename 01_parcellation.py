@@ -15,6 +15,38 @@ from scipy.sparse import save_npz
 def parcellation(
     sub_name, input_dir, out_dir, spatial_regularisation=10, n_clusters=200
 ):
+    """
+    Will load a functional image, and parcellate the brain into different zones that tend to activate together
+
+    Parameters
+    ----------
+    sub_name : string
+        name of the subject, used to access and save his data.
+
+    input_dir : string
+        path to where functional images can be loaded from
+
+    out_dir : string
+        path where files will be saved once computed
+
+    spatial_regularisation : float, default 10
+        once normalised, the spatial parameters a
+
+    n_clusters : int, default 200
+        The number of clusters to divide the image into
+
+    Notes
+    ------
+    the "SUBJECTNAME_func_minimal.nii.gz" rsfMRI file is expected to be found in the input_dir,
+    in a folder named after the subject 
+
+    no output, but saves three files in the out_dir, in the corresponding subject file 
+    skward_regXX_parcellation.nii.gz : the ward parcellated file
+    ward_connectivity.npz : a sparse spatial adjacency matrix, voxel to voxel
+    ward_labels.npy
+
+
+    """
     raw_img = load_img(
         os.path.join(input_dir, "{0}/{0}_func_minimal.nii.gz".format(sub_name)), 1
     )

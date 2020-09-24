@@ -10,14 +10,14 @@ def connectivity(sub_name, out_dir, n_clusters=200):
     parcels_size = []
     ward_labels = np.load(os.path.join(out_dir, sub_name, "ward_labels.npy"))
 
-    for i in range(n_clusters + 1):
+    for i in range(n_clusters):
         parcel_submask.append(np.array(np.nonzero(ward_labels == i))[0])
         parcels_size.append(len(parcel_submask[-1]))
     A = np.zeros([n_clusters, n_clusters])
     ward_connectivity = load_npz(
         os.path.join(out_dir, sub_name, "ward_connectivity.npz")
     )
-    for i in range(n_clusters + 1):
+    for i in range(n_clusters):
         for j in range(i):
             a = ward_connectivity[parcel_submask[i], :][:, parcel_submask[j]]
             a = ward_connectivity[parcel_submask[i], :][:, parcel_submask[j]]
