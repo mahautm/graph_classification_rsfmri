@@ -10,7 +10,7 @@ def run_slurm_job(
     slurm_dir="/scratch/mmahaut/scripts/slurm",
     code_dir="/scratch/mmahaut/scripts/graph_classification_rsfmri",
     script_name_1="01_parcellation.py",
-    script_name_2="02_connectivity.py",
+    script_name_2="02_compute_parcel_adjacency.py",
     time_wall="12:00:00",
 ):
     """
