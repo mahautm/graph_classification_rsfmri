@@ -110,7 +110,8 @@ def compute_graph(sub_name, spatial_regulation=10):
         x1_i = centeroidnp(pos)
         X1.append(x1_i)
         # compute connectivity fingerprint of the parcel i
-        x2_i = connectivity_fingerprint(yeo_timeseries, wards_timeseries[:, i])
+        x2_i = x1_i
+        # x2_i = connectivity_fingerprint(yeo_timeseries, wards_timeseries[:, i])
         X2.append(x2_i)
     # optional: normalize X1 and X2 (with min & max)
     X1 = np.array(X1)
@@ -120,7 +121,7 @@ def compute_graph(sub_name, spatial_regulation=10):
     X2_norm = (X2 - X2.min()) / (X2.max() - X2.min())
     # concatenate X1 and X2 to produce the full
     # set of attributes
-    attr = np.hstack([X1_norm.T, X2_norm.T])
+    attr = np.hstack([X1_norm, X2_norm])
     print(sub_name, " attr : ", attr.shape)
     # construct dict of attributes
     d = {i: list(attr[i, :]) for i in range(attr.shape[0])}
