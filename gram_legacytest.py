@@ -140,7 +140,8 @@ if __name__ == "__main__":
 
     # transform networkx-graph into GraKel-graph
     print(np.array(nx_graphs).shape)
-    G = list(graph_from_networkx([nx_graphs], node_labels_tag="attributes"))
+    print(nx_graphs[0].keys())
+    G = list(graph_from_networkx(nx_graphs, node_labels_tag="attributes"))
 
     gamma = (
         1.0  # I need to check which value we should use... we will change it later...
