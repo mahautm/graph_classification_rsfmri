@@ -139,12 +139,8 @@ if __name__ == "__main__":
     # all your  gx graphs are in a list of graphs called nx_graphs
 
     # transform networkx-graph into GraKel-graph
-    G = list(
-        [
-            graph_from_networkx(nx_graphs[i], node_labels_tag="attributes")
-            for i in range(len(nx_graphs))
-        ]
-    )
+    print(np.array(nx_graphs).shape)
+    G = list(graph_from_networkx([nx_graphs], node_labels_tag="attributes"))
 
     gamma = (
         1.0  # I need to check which value we should use... we will change it later...
