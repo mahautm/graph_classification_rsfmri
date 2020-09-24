@@ -126,7 +126,6 @@ def compute_graph(sub_name, spatial_regulation=10):
     d = {i: list(attr[i, :]) for i in range(attr.shape[0])}
     # add attributes to nodes
     nx.set_node_attributes(gx, d, "attributes")
-    print(len(gx.nodes[1]["attributes"]))
     return gx
 
 
@@ -136,16 +135,18 @@ if __name__ == "__main__":
     nx_graphs = list()
     for sub_name in subs_list:
         nx_graphs.append(compute_graph(sub_name))
-## Compute gram matrix
+    ## Compute gram matrix
 
-# all your  gx graphs are in a list of graphs called nx_graphs
+    # all your  gx graphs are in a list of graphs called nx_graphs
 
-# transform networkx-graph into GraKel-graph
-G = list(graph_from_networkx(list(nx_graphs), node_labels_tag="attributes"))
+    # transform networkx-graph into GraKel-graph
+    G = list(graph_from_networkx(list(nx_graphs), node_labels_tag="attributes"))
 
-gamma = 1.0  # I need to check which value we should use... we will change it later...
-print("GraphHopper gamma : {}".format(gamma))
-gk = GraphHopper(normalize=True, kernel_type=("gaussian", float(gamma)))
-K = gk.fit_transform(G)
-np.save("/scratch/mmahaut/data/abide/graph_classification/gram_matrix.npy", K)
-# K is your gram matrix, that you can then use to perform SVM-based classification...
+    gamma = (
+        1.0  # I need to check which value we should use... we will change it later...
+    )
+    print("GraphHopper gamma : {}".format(gamma))
+    gk = GraphHopper(normalize=True, kernel_type=("gaussian", float(gamma)))
+    K = gk.fit_transform(G)
+    np.save("/scratch/mmahaut/data/abide/graph_classification/gram_matrix.npy", K)
+    # K is your gram matrix, that you can then use to perform SVM-based classification...

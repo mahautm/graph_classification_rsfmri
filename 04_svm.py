@@ -1,3 +1,5 @@
+# Runs, evaluates and saves an SVM model on the graphs built by the preceding scripts
+
 import numpy as np
 import json
 from sklearn.model_selection import StratifiedKFold
