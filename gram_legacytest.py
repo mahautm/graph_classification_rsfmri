@@ -123,7 +123,7 @@ def compute_graph(sub_name, spatial_regulation=10):
     attr = np.hstack([X1_norm, X2_norm])
     print(sub_name, " attr : ", attr.shape)
     # construct dict of attributes
-    d = {i: list(attr[i, :]) for i in range(attr.shape[0])}
+    d = {idx: list(attr[idx, :]) for idx in range(attr.shape[0])}
     # add attributes to nodes
     nx.set_node_attributes(gx, d, "attributes")
     return gx
@@ -131,7 +131,7 @@ def compute_graph(sub_name, spatial_regulation=10):
 
 if __name__ == "__main__":
     subs_list = ["USM_0050475", "USM_0050478", "USM_0050481"]
-    nx_graphs = list()
+    nx_graphs = []
     for sub_name in subs_list:
         nx_graphs.append(compute_graph(sub_name))
     ## Compute gram matrix
