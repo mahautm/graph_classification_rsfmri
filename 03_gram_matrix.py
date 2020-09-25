@@ -1,6 +1,7 @@
 # has to be run with either sklearn version 0.22 or with updated grakel that imports joblib independently
 # On the 24/09/2020 the updated grakel is only available from github (not pip)
 
+#this script does not run because of an error on line 144. to debug, and test, using gram_legacytest.py works better
 import networkx as nx
 from grakel.utils import graph_from_networkx
 from grakel.kernels import GraphHopper
@@ -140,12 +141,7 @@ if __name__ == "__main__":
     # all your  gx graphs are in a list of graphs called nx_graphs
 
     # transform networkx-graph into GraKel-graph
-    G = list(
-        [
-            graph_from_networkx(nx_graphs[i], node_labels_tag="attributes")
-            for i in range(len(nx_graphs))
-        ]
-    )
+    G = list(graph_from_networkx(nx_graphs, node_labels_tag="attributes"))
 
     gamma = (
         1.0  # I need to check which value we should use... we will change it later...

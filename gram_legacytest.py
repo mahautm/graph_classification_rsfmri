@@ -1,6 +1,7 @@
 # has to be run with either sklearn version 0.22 or with updated grakel that imports joblib independently
 # On the 24/09/2020 the updated grakel is only available from github (not pip)
 
+# this is a simplified version of 03_gram_matrix.py on 3 subjects for faster testing
 import networkx as nx
 from grakel.utils import graph_from_networkx
 from grakel.kernels import GraphHopper
@@ -55,6 +56,7 @@ def connectivity_fingerprint(yeo_timeseries, wards_timeserie):
     corr[
         np.where(np.isnan(corr[:]))
     ] = 0  # removing nans, of which we get quite a few, when an input array is constant
+    # it might be more relevant to use an average
     return corr
 
 
@@ -121,7 +123,7 @@ def compute_graph(sub_name, spatial_regulation=10):
     # concatenate X1 and X2 to produce the full
     # set of attributes
     attr = np.hstack([X1_norm, X2_norm])
-    print(sub_name, " attr : ", attr.shape)
+    print(sub_name, " attr : ", attr.shape) # here, with 200 parcels, we'd expect a shape of 200 but get something between 199 and 196, probably for mask reasons
     # construct dict of attributes
     d = {idx: list(attr[idx, :]) for idx in range(attr.shape[0])}
     # add attributes to nodes
@@ -138,7 +140,7 @@ if __name__ == "__main__":
 
     # all your  gx graphs are in a list of graphs called nx_graphs
     # transform networkx-graph into GraKel-graph
-    G = list(graph_from_networkx(list(nx_graphs), node_labels_tag="attr"))
+    G = list(graph_from_networkx(list(nx_graphs), node_labels_tag="attr")) # error here ! the attributes can't be found
 
     gamma = (
         1.0  # I need to check which value we should use... we will change it later...
