@@ -139,7 +139,7 @@ if __name__ == "__main__":
     # all your  gx graphs are in a list of graphs called nx_graphs
     # transform networkx-graph into GraKel-graph
     G = [
-        graph_from_networkx(list(nx_graphs[i]), node_labels_tag="attr")
+        graph_from_networkx([nx_graphs[i]], node_labels_tag="attr")
         for i in range(len(nx_graphs))
     ]
     print(np.array(G))
